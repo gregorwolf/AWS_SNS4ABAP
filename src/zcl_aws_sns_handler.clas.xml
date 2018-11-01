@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_AWS_SNS_HANDLER</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>AWS SNS ICF Handler</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+    <WITH_UNIT_TESTS>X</WITH_UNIT_TESTS>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_AWS_SNS_HANDLER</CLSNAME>
+     <CMPNAME>PARSE_NOTIFICATION</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parse Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_AWS_SNS_HANDLER</CLSNAME>
+     <CMPNAME>PARSE_NOTIFICATION</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parse Notification</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_AWS_SNS_HANDLER</CLSNAME>
+     <CMPNAME>PARSE_SUB_CONF</CMPNAME>
+     <LANGU>D</LANGU>
+     <DESCRIPT>Parse Subscription Confirmation</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_AWS_SNS_HANDLER</CLSNAME>
+     <CMPNAME>PARSE_SUB_CONF</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Parse Subscription Confirmation</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
