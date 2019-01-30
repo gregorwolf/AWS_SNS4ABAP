@@ -36,7 +36,7 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
     cl_http_client=>create_by_url(
       EXPORTING
         url                = iv_subscribe_url    " URL
-         ssl_id             = 'ANONYM'    " SSL Identität
+         ssl_id             = 'ANONYM'    " SSL Identity
       IMPORTING
         client             = DATA(lo_http_client)    " HTTP Client Abstraction
       EXCEPTIONS
