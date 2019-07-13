@@ -32,13 +32,14 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
 
   METHOD confirm_subscription.
     DATA: lv_message TYPE string.
+    DATA: lo_http_client TYPE REF TO if_http_client.
 
     cl_http_client=>create_by_url(
       EXPORTING
         url                = iv_subscribe_url    " URL
-         ssl_id             = 'ANONYM'    " SSL Identity
+        ssl_id             = 'ANONYM'    " SSL Identity
       IMPORTING
-        client             = DATA(lo_http_client)    " HTTP Client Abstraction
+        client             = lo_http_client
       EXCEPTIONS
         argument_not_found = 1
         plugin_not_active  = 2
@@ -49,10 +50,7 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4
                  INTO lv_message.
-      iv_server->response->set_cdata(
-        EXPORTING
-          data   = lv_message
-      ).
+      iv_server->response->set_cdata( lv_message ).
       EXIT.
     ENDIF.
 
@@ -68,10 +66,7 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4
                   INTO lv_message.
-      iv_server->response->set_cdata(
-        EXPORTING
-          data   = lv_message
-      ).
+      iv_server->response->set_cdata( lv_message ).
       EXIT.
     ENDIF.
 
@@ -86,10 +81,7 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4
                         INTO lv_message.
-      iv_server->response->set_cdata(
-        EXPORTING
-          data   = lv_message
-      ).
+      iv_server->response->set_cdata( lv_message ).
       EXIT.
     ENDIF.
   ENDMETHOD.
@@ -97,16 +89,21 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
 
   METHOD if_http_extension~handle_request.
     DATA: lt_header_fields TYPE tihttpnvp.
+    DATA: rv_sub_conf TYPE zaws_sns_sub_conf.
+    DATA: lv_aws_msg_type TYPE string.
+    DATA: iv_post_body TYPE string.
+    DATA: rv_notification TYPE zaws_sns_notification.
     " When using SAP Cloud Platform Connectivity this header isn't passed to the Backend
-    DATA(lv_aws_msg_type) = server->request->get_header_field( name = 'x-amz-sns-message-type' ).
+    lv_aws_msg_type = server->request->get_header_field( name = 'x-amz-sns-message-type' ).
+
     server->request->get_header_fields(
       CHANGING
         fields = lt_header_fields    " Header-Felder
     ).
-    DATA(iv_post_body) = server->request->get_cdata( ).
+    iv_post_body = server->request->get_cdata( ).
 
     IF lv_aws_msg_type IS INITIAL.
-      DATA(rv_sub_conf) = me->parse_sub_conf( iv_post_body = iv_post_body ).
+      rv_sub_conf = me->parse_sub_conf( iv_post_body = iv_post_body ).
       lv_aws_msg_type = rv_sub_conf-type.
     ENDIF.
 
@@ -121,13 +118,12 @@ CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
       LOG-POINT ID zaws_sns FIELDS rv_sub_conf.
 
       me->confirm_subscription(
-        EXPORTING
           iv_subscribe_url = rv_sub_conf-subscribe_url
           iv_server        = server
       ).
 
     ELSEIF lv_aws_msg_type = 'Notification'.
-      DATA(rv_notification) = me->parse_notification( iv_post_body = iv_post_body ).
+      rv_notification = me->parse_notification( iv_post_body = iv_post_body ).
       LOG-POINT ID zaws_sns FIELDS rv_notification.
     ENDIF.
 
