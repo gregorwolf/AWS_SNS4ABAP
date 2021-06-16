@@ -624,7 +624,7 @@
     },
     "prefer_inline": {
       "exclude": [],
-      "severity": "Error"
+      "severity": "Info"
     },
     "prefer_is_not": {
       "exclude": [],
