@@ -1,33 +1,33 @@
-class ZCL_AWS_SNS_HANDLER definition
-  public
-  create public .
+CLASS zcl_aws_sns_handler DEFINITION
+  PUBLIC
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_HTTP_EXTENSION .
+    INTERFACES if_http_extension .
 
-  methods PARSE_NOTIFICATION
-    importing
-      !IV_POST_BODY type STRING
-    returning
-      value(RV_NOTIFICATION) type ZAWS_SNS_NOTIFICATION .
-  methods PARSE_SUB_CONF
-    importing
-      !IV_POST_BODY type STRING
-    returning
-      value(RV_SUB_CONF) type ZAWS_SNS_SUB_CONF .
-protected section.
+    METHODS parse_notification
+      IMPORTING
+        !iv_post_body          TYPE string
+      RETURNING
+        VALUE(rv_notification) TYPE zaws_sns_notification .
+    METHODS parse_sub_conf
+      IMPORTING
+        !iv_post_body      TYPE string
+      RETURNING
+        VALUE(rv_sub_conf) TYPE zaws_sns_sub_conf .
+  PROTECTED SECTION.
 
-  methods CONFIRM_SUBSCRIPTION
-    importing
-      !IV_SUBSCRIBE_URL type STRING
-      !IV_SERVER type ref to IF_HTTP_SERVER .
-private section.
+    METHODS confirm_subscription
+      IMPORTING
+        !iv_subscribe_url TYPE string
+        !iv_server        TYPE REF TO if_http_server .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS ZCL_AWS_SNS_HANDLER IMPLEMENTATION.
+CLASS zcl_aws_sns_handler IMPLEMENTATION.
 
 
   METHOD confirm_subscription.
