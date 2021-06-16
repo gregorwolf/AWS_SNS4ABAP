@@ -28,7 +28,7 @@
     },
     "abapdoc": {
       "exclude": [],
-      "severity": "Error",
+      "severity": "Info",
       "checkLocal": false
     },
     "allowed_object_naming": {
@@ -434,7 +434,7 @@
     },
     "line_length": {
       "exclude": [],
-      "severity": "Error",
+      "severity": "Info",
       "length": 120
     },
     "line_only_punc": {
@@ -444,7 +444,7 @@
     },
     "local_class_naming": {
       "exclude": [],
-      "severity": "Error",
+      "severity": "Info",
       "patternKind": "required",
       "ignoreNames": [],
       "ignorePatterns": [],
