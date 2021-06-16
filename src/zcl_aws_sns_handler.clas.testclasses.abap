@@ -33,11 +33,11 @@ CLASS zcl_aws_sns_handler_test IMPLEMENTATION.
 
   METHOD parse_sub_conf.
 
-
+    DATA: lv_post_body TYPE string.
 
     f_cut = NEW #( ).
 
-    DATA(lv_post_body) = '{ "Type" : "SubscriptionConfirmation",'.
+    lv_post_body = '{ "Type" : "SubscriptionConfirmation",'.
     lv_post_body = lv_post_body && '"MessageId" : "165545c9-2a5c-472c-8df2-7ff2be2b3b1b",'.
     lv_post_body = lv_post_body && '"Token" : "2336412f37fb687f5d51e6e241d09c805a5a57b30d712f794cc5f6a988666d92768dd60a747ba6f3beb",'.
     lv_post_body = lv_post_body && '"TopicArn" : "arn:aws:sns:us-west-2:123456789012:MyTopic",'.
@@ -52,17 +52,17 @@ CLASS zcl_aws_sns_handler_test IMPLEMENTATION.
     DATA(lv_sub_conf) = f_cut->parse_sub_conf( lv_post_body ).
 
     cl_abap_unit_assert=>assert_not_initial( act = lv_sub_conf-token ).
-    cl_abap_unit_assert=>assert_not_initial( act = lv_sub_conf-subscribe_url ).
+    cl_abap_unit_assert=>assert_not_initial( act = lv_sub_conf-subscribe_u_r_l ).
 
   ENDMETHOD.
 
   METHOD parse_notification.
 
-
+    DATA: lv_post_body TYPE string.
 
     f_cut = NEW #( ).
 
-    DATA(lv_post_body) = '{ "Type" : "Notification",'.
+    lv_post_body = '{ "Type" : "Notification",'.
     lv_post_body = lv_post_body && '"Message" : "{\"serialNumber\": \"G0355DSERDSFW\",\"batteryVoltage\": \"1340\",\"clickType\": \"SINGLE\"}"'.
     lv_post_body = lv_post_body && '}'.
 

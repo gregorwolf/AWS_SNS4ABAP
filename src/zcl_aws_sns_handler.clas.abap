@@ -84,7 +84,10 @@ CLASS zcl_aws_sns_handler IMPLEMENTATION.
   METHOD if_http_extension~handle_request.
     DATA: lt_header_fields TYPE tihttpnvp.
 
-
+    DATA(lv_request_method) = server->request->if_http_entity~get_header_field( `~request_method` ).
+    IF lv_request_method IS INITIAL.
+      LOG-POINT ID zaws_sns.
+    ENDIF.
 
     " When using SAP Cloud Platform Connectivity this header isn't passed to the Backend
     DATA(lv_aws_msg_type) = server->request->get_header_field( 'x-amz-sns-message-type' ).
@@ -108,7 +111,7 @@ CLASS zcl_aws_sns_handler IMPLEMENTATION.
       LOG-POINT ID zaws_sns FIELDS lv_sub_conf.
 
       confirm_subscription(
-          iv_subscribe_url = lv_sub_conf-subscribe_url
+          iv_subscribe_url = lv_sub_conf-subscribe_u_r_l
           iv_server        = server ).
 
     ELSEIF lv_aws_msg_type = 'Notification'.
@@ -118,7 +121,6 @@ CLASS zcl_aws_sns_handler IMPLEMENTATION.
 
   ENDMETHOD.
 
-  "! Parse Notification
   METHOD parse_notification.
 
     /ui2/cl_json=>deserialize(
